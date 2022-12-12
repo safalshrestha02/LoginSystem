@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Sign-up | Login</title>
+    <link rel="stylesheet" type="text/css" href="styles.css" />
+  </head>
+  <body>
+    <div class="main">
+      <div class="signup">
+        <form id="reg-form">
+          <label for="chk" aria-hidden="true">Sign up</label>
+          <input type="text" placeholder="User name" id="uname" />
+          <input type="password" placeholder="Password" id="pwd" />
+          <input type="submit" value="Submit Form" class="button" />
+        </form>
+      </div>
+
+      <!-- <div class="login">
+        <form>
+          <label for="chk" aria-hidden="true">Login</label>
+          <input type="email" name="email" placeholder="Email" required="" />
+          <input
+            type="password"
+            name="pswd"
+            placeholder="Password"
+            required=""
+          />
+          <button>Login</button>
+        </form>
+      </div> -->
+    </div>
+  </body>
+  <script>
+    const form = document.getElementById("reg-form");
+    form.addEventListener("submit", registerUser);
+    async function registerUser(event) {
+      event.preventDefault();
+
+      const username = document.getElementById("uname").value;
+      const password = document.getElementById("pwd").value;
+
+      const result = await fetch("/api/register", {
+        method: "POST",
+        headers: {
+          "Contennt Type": "application/json",
+        },
+        body: JSON.stringify({
+          username,
+          password,
+        }),
+      }).then((res) => res.json());
+      console.log(result);
+
+      if (result.status === "ok") {
+          // everythign went fine
+          alert("Success");
+        } else {
+          alert(result.error);
+        }
+    }
+    
+  </script>
+</html>
